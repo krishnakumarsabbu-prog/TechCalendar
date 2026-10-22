@@ -787,23 +787,58 @@ footer {
   background: #ffffff;
   width: min(520px, 100%);
   border-radius: var(--radius-md);
-  padding: 24px;
   box-shadow: var(--shadow-lg);
   max-height: 85vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Drag handle bar (hidden on desktop, visible on mobile) */
+.modal-drag-handle {
+  display: none;
 }
 
 .modal-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  padding: 20px 24px 0;
+  flex-shrink: 0;
 }
 
 .modal h2 {
   font-size: 20px;
   font-weight: 800;
   color: var(--ink);
+}
+
+/* Floating close button for session detail modal */
+.modal-close-float {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  color: var(--ink-secondary);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close-float:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transform: scale(1.08);
 }
 
 .close-btn {
@@ -816,6 +851,14 @@ footer {
   place-items: center;
   font-size: 18px;
   color: var(--muted);
+}
+
+.modal-body-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 0 24px 24px;
 }
 
 .saved-list {
@@ -888,17 +931,50 @@ footer {
 
   .modal {
     width: 100%;
-    max-height: 90vh;
+    max-width: 100%;
+    max-height: 92vh;
+    max-height: 92dvh;
     border-radius: 22px 22px 0 0;
-    padding: 0;
-    overflow: hidden;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.35);
-    animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Drag handle visible on mobile */
+  .modal-drag-handle {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 4px;
+    flex-shrink: 0;
+  }
+
+  .modal-drag-handle span {
+    width: 40px;
+    height: 4px;
+    background: #d1d5db;
+    border-radius: 4px;
+  }
+
+  .modal-head {
+    padding: 8px 18px 0;
+  }
+
+  .modal-body-scroll {
+    padding: 0 18px 24px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Floating close button adjustments for mobile */
+  .modal-close-float {
+    top: 10px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
   }
 
   @keyframes modalSlideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    from { transform: translateY(100%); opacity: 0.5; }
+    to { transform: translateY(0); opacity: 1; }
   }
 
   /* Mobile Bottom Navigation */
@@ -1060,11 +1136,14 @@ footer {
 <!-- Modal Dialog -->
 <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal" id="modalContainer">
+    <div class="modal-drag-handle"><span></span></div>
     <div class="modal-head" id="modalHead">
       <h2 id="modalTitle">My Schedule</h2>
       <button class="close-btn" id="closeModal" aria-label="Close dialog">×</button>
     </div>
-    <div id="modalBody"></div>
+    <div class="modal-body-scroll">
+      <div id="modalBody"></div>
+    </div>
   </div>
 </div>
 
@@ -1466,8 +1545,9 @@ function downloadICS(s) {
 
 function openScheduleModal() {
   $("modalHead").style.display = "flex";
-  $("modalContainer").style.padding = "24px";
-  $("modalContainer").style.overflow = "auto";
+  // Remove any floating close button from session modal
+  const oldFloat = $("modalContainer").querySelector(".modal-close-float");
+  if (oldFloat) oldFloat.remove();
   $("modalTitle").textContent = "My Schedule";
   const list = sessions.filter(s => saved.has(s.id));
   $("modalBody").innerHTML = list.length ? `
@@ -1507,10 +1587,21 @@ function openSessionModal(id) {
   const isSaved = saved.has(s.id);
 
   $("modalHead").style.display = "none";
-  $("modalContainer").style.padding = "0";
-  $("modalContainer").style.overflow = "hidden";
+
+  // Remove previous floating close button if any
+  const oldFloat = $("modalContainer").querySelector(".modal-close-float");
+  if (oldFloat) oldFloat.remove();
+
+  // Add floating close button
+  const floatBtn = document.createElement("button");
+  floatBtn.className = "modal-close-float";
+  floatBtn.setAttribute("aria-label", "Close");
+  floatBtn.innerHTML = "×";
+  floatBtn.addEventListener("click", () => $("modalBackdrop").classList.remove("open"));
+  $("modalContainer").appendChild(floatBtn);
+
   $("modalBody").innerHTML = `
-    <div style="margin-top: 10px;">
+    <div style="padding-top:6px;">
       <div class="detail-banner" style="border-radius: 12px; margin-bottom: 16px; height: 76px;">
         <div class="bulb-badge">
           <svg class="bulb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
