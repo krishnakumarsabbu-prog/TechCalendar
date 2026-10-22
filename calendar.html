@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#c8102e" />
+<meta name="description" content="Innovation Showcase 2026 — Ideas / Technology / Impact. Explore sessions, speakers and build your personal schedule." />
+<title>Innovation Showcase 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #c8102e;
+  --red-hover: #b00b25;
+  --red-light: #fff5f6;
+  --red-border: #fecdd3;
+  --gold: #ffbf27;
+  --gold-glow: #f59e0b;
+  --ink: #0f172a;
+  --ink-secondary: #334155;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --card-bg: #ffffff;
+  --app-bg: #f8fafc;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #0f172a;
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; border: 0; background: transparent; }
+
+/* Main Application Shell */
+.app {
+  width: 100%;
+  max-width: 1140px;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: calc(100vh - 32px);
+}
+
+/* Exact Static Header Banner */
+.hero-banner {
+  width: 100%;
+  position: relative;
+  line-height: 0;
+  background: #2a111e;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.hero-banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Day Strip Carousel */
+.daystrip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px 28px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+}
+
+.daybutton {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 12px 6px 10px;
+  text-align: center;
+  color: var(--ink);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.daybutton:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+}
+
+.daybutton .dow {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+
+.daybutton .date {
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.daybutton .month {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.daybutton .dot {
+  width: 6px;
+  height: 6px;
+  background: #94a3b8;
+  border-radius: 50%;
+  margin-top: 8px;
+  transition: all 0.2s ease;
+}
+
+/* Active Day Card */
+.daybutton.active {
+  background: linear-gradient(135deg, #c8102e 0%, #ad0b25 100%);
+  border-color: #c8102e;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(200, 16, 46, 0.28);
+}
+
+.daybutton.active .dow,
+.daybutton.active .date,
+.daybutton.active .month {
+  color: #ffffff;
+}
+
+.daybutton.active .dot {
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+/* Toolbar: Search & Filter Chips */
+.toolbar {
+  padding: 14px 28px 4px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.searchbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  max-width: 440px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease;
+}
+
+.searchbox:focus-within {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
+}
+
+.searchbox svg {
+  width: 17px;
+  height: 17px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.searchbox input {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  color: var(--ink);
+  font-size: 13.5px;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.chipbtn {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 13px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  transition: all 0.2s ease;
+}
+
+.chipbtn:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.chipbtn.active {
+  background: var(--red-light);
+  border-color: var(--red-border);
+  color: var(--red);
+}
+
+/* Main Two-Column Layout */
+.main-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.85fr);
+  gap: 18px;
+  padding: 16px 28px 32px;
+  align-items: start;
+}
+
+/* Sessions Timeline Column */
+.sessions-column {
+  min-width: 0;
+}
+
+.day-group {
+  margin-bottom: 22px;
+  scroll-margin-top: 14px;
+}
+
+.dayheading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0 2px;
+}
+
+.dayheading h2 {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.4px;
+  margin-bottom: 3px;
+}
+
+.dayheading p {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.dayheading p .bullet {
+  padding: 0 6px;
+  color: #cbd5e1;
+}
+
+.dayheading .count-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  background: var(--red-light);
+  border-radius: 100px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+/* Session Cards */
+.session-list {
+  display: grid;
+  gap: 9px;
+}
+
+.session-card {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  color: inherit;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.session-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.session-time {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+
+.session-info {
+  min-width: 0;
+}
+
+.session-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.session-speakers {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.session-extra {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--red);
+  background: var(--red-light);
+  border-radius: 100px;
+  padding: 2px 7px;
+  margin-top: 5px;
+}
+
+.chevron-svg {
+  width: 16px;
+  height: 16px;
+  color: #94a3b8;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Selected Session Card (Red Border & Accent Stripe) */
+.session-card.selected {
+  border-color: #f43f5e;
+  border-left: 4px solid var(--red);
+  background: linear-gradient(90deg, #fff5f6 0%, #ffffff 100%);
+  box-shadow: 0 4px 14px rgba(200, 16, 46, 0.08);
+}
+
+.session-card.selected .session-time {
+  color: var(--red);
+}
+
+.session-card.selected .chevron-svg {
+  color: var(--red);
+  transform: translateX(2px);
+}
+
+/* Detail Column (Sticky Right Pane) */
+.detail-column {
+  min-width: 0;
+  position: sticky;
+  top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detail-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* Detail Glowing Wave Banner */
+.detail-banner {
+  height: 84px;
+  position: relative;
+  background: linear-gradient(125deg, #78081c 0%, #c8102e 50%, #f59e0b 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.banner-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bulb-badge {
+  position: relative;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.bulb-icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* Detail Content Body */
+.detail-content {
+  padding: 20px;
+}
+
+.detail-datetime {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.detail-content h2 {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.28;
+  letter-spacing: -0.4px;
+  margin-bottom: 12px;
+}
+
+.speaker-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.speaker-pill {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.speaker-pill svg {
+  width: 15px;
+  height: 15px;
+  color: var(--muted);
+}
+
+.category-pill {
+  display: inline-block;
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.detail-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 14px 0;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 12px;
+  margin: 14px 0;
+  color: var(--ink);
+}
+
+.detail-row .rowicon {
+  width: 18px;
+  height: 18px;
+  color: var(--ink-secondary);
+  margin-top: 1px;
+}
+
+.detail-row strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.detail-row p {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+.overview-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.overview-heading svg {
+  width: 18px;
+  height: 18px;
+  color: var(--ink-secondary);
+}
+
+.overview-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+/* Primary "Add to My Schedule" Button */
+.primary-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: var(--radius-sm);
+  padding: 13px 18px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #c8102e 0%, #ad0b25 100%);
+  font-size: 13.5px;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(200, 16, 46, 0.28);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(200, 16, 46, 0.36);
+}
+
+.primary-btn.saved {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.28);
+}
+
+.primary-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.secondary-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.secondary-actions button {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 12px;
+  color: var(--ink-secondary);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.secondary-actions button:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* "All Sessions" Sidebar Section */
+.all-sessions-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.all-sessions-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.all-sessions-icon {
+  width: 22px;
+  height: 22px;
+  background: var(--red);
+  color: #ffffff;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+}
+
+.all-sessions-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.mini-calendar {
+  display: grid;
+  gap: 2px;
+}
+
+.mini-day {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-top: 1px solid #f1f5f9;
+  text-align: left;
+  background: transparent;
+  width: 100%;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.mini-day:hover {
+  background: #fff5f6;
+  border-radius: 8px;
+}
+
+.mini-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 13.5px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mini-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.mini-copy strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  display: block;
+}
+
+.mini-copy span {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.mini-chevron {
+  width: 14px;
+  height: 14px;
+  color: #94a3b8;
+}
+
+/* Empty States */
+.empty {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--muted);
+  background: #ffffff;
+}
+
+.empty strong {
+  display: block;
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 18px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 12px;
+  background: #ffffff;
+  margin-top: auto;
+}
+
+.footer-brand {
+  font-weight: 800;
+  color: var(--red);
+  letter-spacing: 0.3px;
+}
+
+/* Mobile Bottom Navigation Bar */
+.bottomnav {
+  display: none;
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 85px;
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  z-index: 100;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Modal Window */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 120;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal {
+  background: #ffffff;
+  width: min(520px, 100%);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.modal h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.close-btn {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.saved-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.saved-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.saved-item strong {
+  font-size: 13.5px;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.saved-item p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.saved-item button {
+  background: var(--red-light);
+  color: var(--red);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+  body { padding: 8px; }
+  .app { border-radius: 16px; }
+  .main-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+    padding: 14px 18px 24px;
+    gap: 14px;
+  }
+  .daystrip { padding: 12px 18px; gap: 8px; }
+  .toolbar { padding: 12px 18px 4px; }
+}
+
+@media (max-width: 720px) {
+  body { padding: 0; background: #ffffff; }
+  .app { border-radius: 0; box-shadow: none; min-height: 100vh; }
+  .hero-banner { border-radius: 0; }
+
+  .daystrip { padding: 10px 12px; gap: 6px; }
+  .daybutton { padding: 8px 4px; }
+  .daybutton .dow { font-size: 11px; }
+  .daybutton .date { font-size: 21px; }
+  .daybutton .month { font-size: 10.5px; }
+
+  .toolbar { padding: 10px 12px 0; }
+  .searchbox { max-width: none; width: 100%; }
+  .toolbar-actions { width: 100%; justify-content: space-between; }
+  .chipbtn { flex: 1; text-align: center; padding: 7px 4px; font-size: 11.5px; }
+
+  .main-layout {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 12px 85px;
+    gap: 16px;
+  }
+  .sessions-column { width: 100%; }
+  .detail-column { width: 100%; position: static; }
+
+  /* Mobile Bottom Navigation */
+  .bottomnav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 6px 2px calc(6px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+  }
+
+  .navitem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--muted);
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 4px 2px;
+  }
+
+  .navitem svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .navitem.active {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  footer {
+    padding: 16px 14px 84px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Exact Static Header Banner -->
+  <header class="hero-banner" role="banner">
+    <img src="header-banner.png" alt="Wells Fargo Innovation Showcase 2026 — Ideas / Technology / Impact. Oct 26–30, 2026 | Innovation Center. Smarter Solutions. Brighter Future." class="hero-banner-img" />
+  </header>
+
+  <!-- Day Selector Carousel -->
+  <nav class="daystrip" id="dayStrip" aria-label="Showcase days"></nav>
+
+  <!-- Controls: Search & Filter Chips -->
+  <section class="toolbar" aria-label="Session filters">
+    <label class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input id="searchInput" type="search" placeholder="Search sessions, speakers or topics…" aria-label="Search sessions">
+    </label>
+    <div class="toolbar-actions">
+      <button class="chipbtn active" id="allFilter">All sessions</button>
+      <button class="chipbtn" id="techFilter">Tech talks</button>
+      <button class="chipbtn" id="savedFilter">My schedule (<span id="savedCount">0</span>)</button>
+    </div>
+  </section>
+
+  <!-- Main Grid: Timeline & Details -->
+  <main class="main-layout">
+    <section class="sessions-column" id="sessionsColumn">
+      <div id="sessionsContainer"></div>
+    </section>
+
+    <!-- Right Sticky Column: Detail View & All Sessions Mini -->
+    <aside class="detail-column" id="detailColumn">
+      <article class="detail-card" id="detailCard"></article>
+
+      <!-- All Sessions Quick Access -->
+      <section class="all-sessions-card">
+        <h3>
+          <span class="all-sessions-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </span>
+          All Sessions
+        </h3>
+        <div class="mini-calendar" id="miniCalendar"></div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-brand">INNOVATION SHOWCASE 2026</span>
+    <span>Ideas that move us forward &nbsp;·&nbsp; October 26–30, 2026</span>
+    <span>Wells Fargo Enterprise Technology</span>
+  </footer>
+</div>
+
+<!-- Mobile Bottom Navigation -->
+<nav class="bottomnav" aria-label="Mobile navigation">
+  <button class="navitem active" data-nav="home">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </svg>
+    <span>Home</span>
+  </button>
+  <button class="navitem" data-nav="schedule">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <line x1="16" y1="2" x2="16" y2="6"></line>
+      <line x1="8" y1="2" x2="8" y2="6"></line>
+      <line x1="3" y1="10" x2="21" y2="10"></line>
+    </svg>
+    <span>My Schedule</span>
+  </button>
+  <button class="navitem" data-nav="venue">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+    <span>Venue Map</span>
+  </button>
+  <button class="navitem" data-nav="speakers">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </svg>
+    <span>Speakers</span>
+  </button>
+  <button class="navitem" data-nav="more">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+    <span>More</span>
+  </button>
+</nav>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Modal Dialog -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">My Schedule</h2>
+      <button class="close-btn" id="closeModal" aria-label="Close dialog">×</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const days = [
+  { dow: "Mon", date: 26, month: "Oct", full: "Monday, October 26", color: "#c8102e" },
+  { dow: "Tue", date: 27, month: "Oct", full: "Tuesday, October 27", color: "#f59e0b" },
+  { dow: "Wed", date: 28, month: "Oct", full: "Wednesday, October 28", color: "#10b981" },
+  { dow: "Thu", date: 29, month: "Oct", full: "Thursday, October 29", color: "#2563eb" },
+  { dow: "Fri", date: 30, month: "Oct", full: "Friday, October 30", color: "#8b5cf6" }
+];
+
+const sessions = [
+  { id: 1, day: 0, time: "11:00 AM", end: "12:00 PM", title: "Trust Reviews Reimagined with AI", speakers: ["Latha Vasudevarao", "Monika Oberoi"], description: "Discover how AI is transforming trust reviews with faster insights, greater accuracy and improved customer outcomes. Learn real-world use cases, key innovations and what’s next in building trust at scale." },
+  { id: 2, day: 0, time: "12:00 PM", end: "1:00 PM", title: "Prompt, Build, Scale Data Engineering", speakers: ["Satish Ponda", "Saurabh Dey"], description: "Explore how prompt-driven development and modern engineering practices can help data teams build, scale and deliver trusted data solutions faster." },
+  { id: 3, day: 0, time: "2:00 PM", end: "3:00 PM", title: "Every Call, Intelligently Orchestrated", speakers: ["Shivaprasad Mohanrao"], description: "See how intelligent orchestration can transform call journeys, coordinate experiences and help teams respond more effectively." },
+  { id: 4, day: 0, time: "3:00 PM", end: "4:00 PM", title: "Policy Answers in Seconds", speakers: ["Kunal Kumar", "Prachiti Bake", "Shivang Bhargava"], description: "Discover a faster way to find policy answers, reduce manual searching and help colleagues reach consistent, actionable guidance." },
+  { id: 5, day: 0, time: "7:00 PM", end: "8:00 PM", title: "Tech Talk by ThoughtSpot", speakers: ["Sonny Rivera", "Shailesh Prajapati"], tech: true, description: "An industry technology talk from ThoughtSpot. Explore ideas, perspectives and practical approaches shared by the guest speakers." },
+
+  { id: 6, day: 1, time: "11:00 AM", end: "12:00 PM", title: "Contact Center Signals to Trusted Decisions", speakers: ["Charan Mydavolu"], tech: true, partner: "Tech Talk by AWS", description: "Learn how contact-center signals can be translated into trusted decisions, with an AWS technology talk perspective." },
+  { id: 7, day: 1, time: "12:00 PM", end: "1:00 PM", title: "Architecture as Code: Design, Govern, Scale", speakers: ["Raveesh Sharma", "Pradeep Narayanaswamy", "Gourav Sharma"], description: "Explore architecture as code to make design practices repeatable, governance more consistent and enterprise architecture easier to scale." },
+  { id: 8, day: 1, time: "2:00 PM", end: "3:00 PM", title: "The AI Front Door for IT Support", speakers: ["Rakesh Padhiary", "Niraj Thakar"], description: "See how an AI-powered front door can simplify IT support, guide users to answers and improve the support experience." },
+  { id: 9, day: 1, time: "3:00 PM", end: "4:00 PM", title: "Financial Statements to Decisions—Faster", speakers: ["Chandan Chandrupatla", "Pavan Puttaswamy", "S Sridhar"], description: "Explore ways to accelerate the journey from financial statements to useful insights and faster, more informed decisions." },
+  { id: 10, day: 1, time: "7:00 PM", end: "8:00 PM", title: "3,000 Apps. One Observability View", speakers: ["Praveen Kumar Jagadeesan", "Pritesh Parmar"], description: "Discover how a unified observability view can help teams understand health and signals across a large application estate." },
+
+  { id: 11, day: 2, time: "11:00 AM", end: "12:00 PM", title: "One AI Teammate, 41,800 Users", speakers: ["Kazhian Muthusami", "Monika Oberoi"], description: "Explore an AI teammate experience designed to support a large employee community and make everyday work more productive." },
+  { id: 12, day: 2, time: "12:00 PM", end: "1:00 PM", title: "Ask Your Stack. Find Root Cause Faster", speakers: ["Kiran kumar Tula"], description: "Learn how conversational exploration across your technology stack can help engineers find root causes faster." },
+  { id: 13, day: 2, time: "2:00 PM", end: "3:00 PM", title: "Customer 360—Ready When You Ask", speakers: ["Sai Anusha Kurapati", "S P Muthukrishnan", "Ramya Balasubramanian"], description: "See how customer information can be brought together to deliver a more complete view when teams need it." },
+  { id: 14, day: 2, time: "3:00 PM", end: "4:00 PM", title: "From Incident to Insight—By Conversation", speakers: ["Shibankar Ghosh"], description: "Explore a conversational approach to incident analysis that helps teams move from operational events to actionable insight." },
+  { id: 15, day: 2, time: "7:00 PM", end: "8:00 PM", title: "AI Governance for Prompts and Unstructured Data", speakers: ["Roddi Krishna", "Vivek Sharma"], tech: true, partner: "Tech Talk by Cognition · Jack Meigel; Daniel Levin", description: "Explore governance approaches for prompts and unstructured data, alongside a Cognition technology talk featuring Jack Meigel and Daniel Levin." },
+
+  { id: 16, day: 3, time: "10:30 AM", end: "11:00 AM", title: "Tech Talk by IBM", speakers: ["Manish Bhide"], tech: true, description: "An industry technology talk from IBM with Manish Bhide." },
+  { id: 17, day: 3, time: "11:00 AM", end: "12:00 PM", title: "Modernize Mainframe, Keep Business Moving", speakers: ["Vinay Nair", "Ramachandra Srinivas"], description: "Explore modernization approaches that help evolve mainframe capabilities while maintaining business continuity." },
+  { id: 18, day: 3, time: "12:00 PM", end: "1:00 PM", title: "Tokenized Deposits: Build Faster, Test Smarter", speakers: ["Vimal Mishra", "Rajendran Paranthaman"], description: "Discover ways to build and test tokenized deposit capabilities faster, with a focus on smarter engineering." },
+  { id: 19, day: 3, time: "2:00 PM", end: "3:00 PM", title: "Give Every AI Agent an Identity", speakers: ["Bhargavi Bandi", "Harishankar H"], description: "Learn why agent identity matters and how identity-aware controls can support safer, more accountable AI agent operations." },
+  { id: 20, day: 3, time: "3:00 PM", end: "4:00 PM", title: "Policy Change to Action—in Minutes", speakers: ["Raghav Nyapati", "Trilok Maddipudi"], description: "Explore how policy changes can be translated into clear, timely action with less manual effort." },
+  { id: 21, day: 3, time: "7:00 PM", end: "8:00 PM", title: "From Trusted Answers to Tested Experiences", speakers: ["Nikitha M", "Lochan George", "Ashish Reddy"], tech: true, partner: "Tech Talk by Arize · Aparna Dhinakaran", description: "Explore the journey from trusted answers to tested experiences, including Vantage Assistant, Relay and VISTA, with an Arize technology talk." },
+
+  { id: 22, day: 4, time: "11:00 AM", end: "12:00 PM", title: "The Right Access, Recommended in Real Time", speakers: ["Parth Choubey", "Sailesh Swaminathan"], tech: true, partner: "Tech Talk by H2O.ai · Ashrith Barthur", description: "Explore real-time access recommendations and a technology talk from H2O.ai featuring Ashrith Barthur." },
+  { id: 23, day: 4, time: "12:00 PM", end: "1:00 PM", title: "Q-Forge – Build Test Suite with Agentic Automation", speakers: ["Pravin Kumar Pachamuthu", "Sini Sivasankaran"], description: "See how agentic automation can help teams build test suites and strengthen software quality workflows." },
+  { id: 24, day: 4, time: "2:00 PM", end: "3:00 PM", title: "Records Management Modernization with Data Platform", speakers: ["Krishna Gokavarapu"], description: "Explore how a modern data platform can support records management modernization and more effective information workflows." },
+  { id: 25, day: 4, time: "3:00 PM", end: "4:00 PM", title: "Policy as Testable, Traceable Action", speakers: ["Roshin Puthanveetil"], description: "Learn how policies can become testable, traceable actions that help teams demonstrate consistent execution." },
+  { id: 26, day: 4, time: "7:00 PM", end: "8:00 PM", title: "Ask iBot: ECM Ops in Under a Minute", speakers: ["Surya Mangipudi", "Vivekananda Kondaveeti"], tech: true, partner: "Tech Talk by Google · Vasu Mittal", description: "See how iBot can help streamline ECM operations in under a minute, with a Google technology talk featuring Vasu Mittal." }
+];
+
+let activeDay = 0;
+let selectedId = 1;
+let filter = "all";
+let query = "";
+const saved = new Set();
+
+const $ = id => document.getElementById(id);
+const escapeHTML = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+// Filter logic
+function getFilteredSessions() {
+  return sessions.filter(s => {
+    if (filter === "tech" && !s.tech) return false;
+    if (filter === "saved" && !saved.has(s.id)) return false;
+    if (query) {
+      const q = query.toLowerCase();
+      const match = (s.title + " " + s.speakers.join(" ") + " " + (s.partner || "") + " " + s.description).toLowerCase();
+      if (!match.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+// Render Day Strip
+function renderDays() {
+  $("dayStrip").innerHTML = days.map((d, i) => `
+    <button class="daybutton ${i === activeDay ? "active" : ""}" data-day="${i}" aria-pressed="${i === activeDay}">
+      <span class="dow">${d.dow}</span>
+      <span class="date">${d.date}</span>
+      <span class="month">${d.month}</span>
+      <span class="dot"></span>
+    </button>
+  `).join("");
+
+  $("dayStrip").querySelectorAll("[data-day]").forEach(b => {
+    b.addEventListener("click", () => {
+      const dayIdx = +b.dataset.day;
+      activeDay = dayIdx;
+      filter = "all";
+      updateFilters();
+      const el = $(`day-group-${dayIdx}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+}
+
+// Render Sessions Timeline (All Days or Filtered)
+function renderSessions() {
+  const container = $("sessionsContainer");
+  const filtered = getFilteredSessions();
+
+  if (!filtered.length) {
+    container.innerHTML = `<div class="empty"><strong>No sessions found</strong>Try another search keyword or switch back to "All sessions".</div>`;
+    return;
+  }
+
+  // Group filtered sessions by day
+  const grouped = {};
+  days.forEach((_, i) => grouped[i] = []);
+  filtered.forEach(s => grouped[s.day].push(s));
+
+  let html = "";
+  days.forEach((d, i) => {
+    const list = grouped[i];
+    if (!list.length) return;
+
+    html += `
+      <section class="day-group" id="day-group-${i}">
+        <div class="dayheading">
+          <div>
+            <h2>${escapeHTML(d.full)}</h2>
+            <p>${list.length} Sessions <span class="bullet">•</span> ${i === 3 ? "10:30 AM" : "11:00 AM"} – 8:00 PM</p>
+          </div>
+          <span class="count-badge">DAY 0${i + 1}</span>
+        </div>
+        <div class="session-list">
+          ${list.map(s => `
+            <button class="session-card ${s.id === selectedId ? "selected" : ""}" data-id="${s.id}">
+              <span class="session-time">${escapeHTML(s.time)}</span>
+              <span class="session-info">
+                <span class="session-title">${escapeHTML(s.title)}</span>
+                <span class="session-speakers">${escapeHTML(s.speakers.join("; "))}</span>
+                ${s.partner ? `<span class="session-extra">${escapeHTML(s.partner)}</span>` : ""}
+              </span>
+              <svg class="chevron-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          `).join("")}
+        </div>
+      </section>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  container.querySelectorAll("[data-id]").forEach(b => {
+    b.addEventListener("click", () => {
+      selectedId = +b.dataset.id;
+      renderSessions();
+      renderDetail();
+      if (window.innerWidth <= 720) {
+        $("detailColumn").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+}
+
+// Render Detail Pane
+function renderDetail() {
+  const s = sessions.find(x => x.id === selectedId) || sessions[0];
+  const d = days[s.day];
+  const isSaved = saved.has(s.id);
+
+  $("detailCard").innerHTML = `
+    <div class="detail-banner">
+      <div class="bulb-badge">
+        <svg class="bulb-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18h6"></path>
+          <path d="M10 22h4"></path>
+          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+        </svg>
+      </div>
+      <svg class="banner-waves" viewBox="0 0 400 90" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="wave1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff7a18" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#ffd000" stop-opacity="0.2"/>
+          </linearGradient>
+          <linearGradient id="wave2" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ff0055" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#ffaa00" stop-opacity="0.4"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,70 C120,20 220,90 400,25 L400,90 L0,90 Z" fill="url(#wave1)"/>
+        <path d="M0,80 C150,40 260,100 400,45 L400,90 L0,90 Z" fill="url(#wave2)"/>
+        <path d="M0,50 Q180,95 400,15" fill="none" stroke="#ffe082" stroke-width="1.8" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <div class="detail-content">
+      <div class="detail-datetime">${escapeHTML(d.full)} &nbsp;•&nbsp; ${escapeHTML(s.time)} – ${escapeHTML(s.end)}</div>
+      <h2>${escapeHTML(s.title)}</h2>
+
+      <div class="speaker-pills">
+        ${s.speakers.map(n => `
+          <span class="speaker-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            ${escapeHTML(n)}
+          </span>
+        `).join("")}
+      </div>
+
+      <span class="category-pill">${s.tech ? "Industry Tech Talk" : "Innovation Showcase"}</span>
+
+      ${s.partner ? `
+        <div class="detail-row">
+          <svg class="rowicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <div>
+            <strong>Partner / Tech Talk</strong>
+            <p>${escapeHTML(s.partner)}</p>
+          </div>
+        </div>
+      ` : ""}
+
+      <div class="detail-divider"></div>
+
+      <div class="detail-row">
+        <svg class="rowicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <div>
+          <strong>Time</strong>
+          <p>${escapeHTML(s.time)} – ${escapeHTML(s.end)}</p>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <svg class="rowicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <div>
+          <strong>Location</strong>
+          <p>Innovation Center – Main Stage</p>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <svg class="rowicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <div>
+          <strong>Speakers</strong>
+          <p>${s.speakers.map(escapeHTML).join("<br>")}</p>
+        </div>
+      </div>
+
+      <div class="detail-divider"></div>
+
+      <div class="overview-heading">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        Session Overview
+      </div>
+      <p class="overview-text">${escapeHTML(s.description)}</p>
+
+      <button class="primary-btn ${isSaved ? "saved" : ""}" id="saveSession">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+          ${isSaved ? '<polyline points="9 16 11 18 15 14"></polyline>' : '<line x1="12" y1="13" x2="12" y2="17"></line><line x1="10" y1="15" x2="14" y2="15"></line>'}
+        </svg>
+        ${isSaved ? "Added to My Schedule" : "Add to My Schedule"}
+      </button>
+
+      <div class="secondary-actions">
+        <button id="shareSession">↗ Share session</button>
+        <button id="calendarSession">＋ Calendar file (.ics)</button>
+      </div>
+    </div>
+  `;
+
+  $("saveSession").addEventListener("click", () => {
+    if (saved.has(s.id)) {
+      saved.delete(s.id);
+      showToast("Removed from My Schedule");
+    } else {
+      saved.add(s.id);
+      showToast("Added to My Schedule");
+    }
+    renderDetail();
+    updateFilters();
+    if (filter === "saved") renderSessions();
+  });
+
+  $("shareSession").addEventListener("click", () => shareSession(s));
+  $("calendarSession").addEventListener("click", () => downloadICS(s));
+}
+
+// Render "All Sessions" sidebar mini calendar
+function renderMini() {
+  $("miniCalendar").innerHTML = days.map((d, i) => `
+    <button class="mini-day" data-mini="${i}">
+      <span class="mini-badge" style="background:${d.color}">${d.date}</span>
+      <span class="mini-copy">
+        <strong>${d.full}</strong>
+        <span>${sessions.filter(s => s.day === i).length} Sessions</span>
+      </span>
+      <svg class="mini-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  `).join("");
+
+  $("miniCalendar").querySelectorAll("[data-mini]").forEach(b => {
+    b.addEventListener("click", () => {
+      const idx = +b.dataset.mini;
+      activeDay = idx;
+      filter = "all";
+      const firstSess = sessions.find(s => s.day === idx);
+      if (firstSess) selectedId = firstSess.id;
+      updateFilters();
+      renderSessions();
+      renderDetail();
+      const el = $(`day-group-${idx}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+function updateFilters() {
+  ["allFilter", "techFilter", "savedFilter"].forEach((id, i) => {
+    $(id).classList.toggle("active", ["all", "tech", "saved"][i] === filter);
+  });
+  $("savedCount").textContent = saved.size;
+  $("dayStrip").querySelectorAll("[data-day]").forEach(b => {
+    b.classList.toggle("active", +b.dataset.day === activeDay);
+  });
+}
+
+function showToast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => t.classList.remove("show"), 2400);
+}
+
+function shareSession(s) {
+  const text = `${s.title}\n${days[s.day].full} · ${s.time} – ${s.end}\nSpeakers: ${s.speakers.join(", ")}${s.partner ? "\n" + s.partner : ""}\nInnovation Showcase 2026`;
+  if (navigator.share) {
+    navigator.share({ title: s.title, text }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text)
+      .then(() => showToast("Session details copied to clipboard"))
+      .catch(() => showToast(text));
+  } else {
+    showToast("Sharing not supported in this browser.");
+  }
+}
+
+function toICSDate(day, time) {
+  const [hms, ampm] = time.split(" ");
+  const [h, m] = hms.split(":").map(Number);
+  let hh = h % 12 + (ampm === "PM" ? 12 : 0);
+  return `202610${String(26 + day).padStart(2, "0")}T${String(hh).padStart(2, "0")}${String(m).padStart(2, "0")}00`;
+}
+
+function downloadICS(s) {
+  const start = toICSDate(s.day, s.time);
+  const end = toICSDate(s.day, s.end);
+  const clean = t => t.replace(/\\/g, "\\\\").replace(/,/g, "\\,").replace(/;/g, "\\;").replace(/\n/g, "\\n");
+  const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Innovation Showcase 2026//EN\nCALSCALE:GREGORIAN\nBEGIN:VEVENT\nUID:showcase-${s.id}-2026@wells-fargo\nDTSTAMP:20261001T000000Z\nDTSTART:${start}\nDTEND:${end}\nSUMMARY:${clean(s.title)}\nDESCRIPTION:${clean("Speakers: " + s.speakers.join(", ") + (s.partner ? " | " + s.partner : "") + "\\n" + s.description)}\nLOCATION:Innovation Center – Main Stage\nEND:VEVENT\nEND:VCALENDAR`;
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `innovation-showcase-session-${s.id}.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast("Calendar event downloaded");
+}
+
+function openScheduleModal() {
+  $("modalTitle").textContent = "My Schedule";
+  const list = sessions.filter(s => saved.has(s.id));
+  $("modalBody").innerHTML = list.length ? `
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;">Saved sessions on this device (${list.length}):</p>
+    <div class="saved-list">
+      ${list.map(s => `
+        <div class="saved-item">
+          <div>
+            <strong>${escapeHTML(s.title)}</strong>
+            <p>${escapeHTML(days[s.day].dow + " " + days[s.day].date + " Oct · " + s.time)} &bull; ${escapeHTML(s.speakers.join("; "))}</p>
+          </div>
+          <button data-remove="${s.id}">Remove</button>
+        </div>
+      `).join("")}
+    </div>
+  ` : `
+    <p style="font-size:13.5px;color:var(--muted);line-height:1.6;">You have not saved any sessions yet. Select a session card and tap <strong>Add to My Schedule</strong> to create your agenda.</p>
+  `;
+
+  $("modalBody").querySelectorAll("[data-remove]").forEach(b => {
+    b.addEventListener("click", () => {
+      saved.delete(+b.dataset.remove);
+      openScheduleModal();
+      renderDetail();
+      updateFilters();
+      if (filter === "saved") renderSessions();
+    });
+  });
+
+  $("modalBackdrop").classList.add("open");
+}
+
+// Scroll spy for day strip
+function setupScrollSpy() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        const dayIdx = +id.replace("day-group-", "");
+        if (!isNaN(dayIdx)) {
+          activeDay = dayIdx;
+          $("dayStrip").querySelectorAll("[data-day]").forEach(b => {
+            b.classList.toggle("active", +b.dataset.day === activeDay);
+          });
+        }
+      }
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+
+  days.forEach((_, i) => {
+    const el = $(`day-group-${i}`);
+    if (el) observer.observe(el);
+  });
+}
+
+// Search & Filter event bindings
+$("searchInput").addEventListener("input", e => {
+  query = e.target.value;
+  renderSessions();
+});
+
+$("allFilter").addEventListener("click", () => {
+  filter = "all";
+  renderSessions();
+  updateFilters();
+});
+
+$("techFilter").addEventListener("click", () => {
+  filter = filter === "tech" ? "all" : "tech";
+  renderSessions();
+  updateFilters();
+});
+
+$("savedFilter").addEventListener("click", () => {
+  if (saved.size > 0) {
+    filter = filter === "saved" ? "all" : "saved";
+    renderSessions();
+    updateFilters();
+  } else {
+    openScheduleModal();
+  }
+});
+
+$("closeModal").addEventListener("click", () => $("modalBackdrop").classList.remove("open"));
+$("modalBackdrop").addEventListener("click", e => {
+  if (e.target === $("modalBackdrop")) $("modalBackdrop").classList.remove("open");
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") $("modalBackdrop").classList.remove("open");
+});
+
+// Mobile Bottom Nav Bindings
+document.querySelectorAll("[data-nav]").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll("[data-nav]").forEach(n => n.classList.toggle("active", n === b));
+    const nav = b.dataset.nav;
+    if (nav === "schedule") {
+      openScheduleModal();
+      return;
+    }
+    if (nav === "speakers") {
+      const names = [...new Set(sessions.flatMap(s => s.speakers))].sort();
+      $("modalTitle").textContent = "Speakers Directory";
+      $("modalBody").innerHTML = `
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;">Distinguished speakers presenting at Innovation Showcase 2026:</p>
+        <div class="saved-list">
+          ${names.map(n => `<div class="saved-item"><strong>${escapeHTML(n)}</strong></div>`).join("")}
+        </div>
+      `;
+      $("modalBackdrop").classList.add("open");
+      return;
+    }
+    if (nav === "venue") {
+      $("modalTitle").textContent = "Venue Information";
+      $("modalBody").innerHTML = `
+        <p style="font-size:14px;color:var(--ink);font-weight:700;margin-bottom:6px;">Innovation Center – Main Stage</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Keynotes and main stage presentations will be hosted in the Innovation Center Auditorium. Breakout discussions and partner exhibits are located in Pavilions A & B on Level 2.</p>
+      `;
+      $("modalBackdrop").classList.add("open");
+      return;
+    }
+    if (nav === "more") {
+      $("modalTitle").textContent = "About Innovation Showcase 2026";
+      $("modalBody").innerHTML = `
+        <p style="font-size:14px;color:var(--ink);font-weight:700;margin-bottom:4px;">Ideas / Technology / Impact</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px;">October 26–30, 2026. Explore sessions, learn from enterprise engineering leaders, and save sessions directly to your personal schedule.</p>
+        <p style="font-size:12px;color:var(--muted);">Wells Fargo Enterprise Technology &bull; Event Planning Guide</p>
+      `;
+      $("modalBackdrop").classList.add("open");
+      return;
+    }
+
+    // "home" tapped
+    filter = "all";
+    query = "";
+    $("searchInput").value = "";
+    activeDay = 0;
+    selectedId = 1;
+    updateFilters();
+    renderSessions();
+    renderDetail();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+});
+
+// Initialization
+function init() {
+  renderDays();
+  renderSessions();
+  renderDetail();
+  renderMini();
+  updateFilters();
+  setupScrollSpy();
+}
+
+init();
+</script>
+
+</body>
+</html>
