@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#c8102e" />
-<meta name="description" content="Innovation Showcase 2026 — Ideas / Technology / Impact. Explore sessions, speakers and build your personal schedule." />
+<meta name="description" content="Innovation Showcase 2026 — Innovate >> Adopt >> Reuse. Explore sessions, speakers and build your personal schedule." />
 <title>Innovation Showcase 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1030,7 +1030,7 @@ footer {
 <div class="app">
   <!-- Exact Static Header Banner -->
   <header class="hero-banner" role="banner">
-    <img src="header-banner.png" alt="Wells Fargo Innovation Showcase 2026 — Ideas / Technology / Impact. Oct 26–30, 2026 | Innovation Center. Smarter Solutions. Brighter Future." class="hero-banner-img" />
+    <img src="header-banner.png" alt="Wells Fargo Innovation Showcase 2026 — Innovate >> Adopt >> Reuse. Oct 26–30, 2026 | Innovation Center. Smarter Solutions. Brighter Future." class="hero-banner-img" />
   </header>
 
   <!-- Day Selector Carousel -->
@@ -1083,7 +1083,7 @@ footer {
   <!-- Footer -->
   <footer>
     <span class="footer-brand">INNOVATION SHOWCASE 2026</span>
-    <span>Ideas that move us forward &nbsp;·&nbsp; October 26–30, 2026</span>
+    <span>Innovate · Adopt · Reuse &nbsp;·&nbsp; October 26–30, 2026</span>
     <a href="qr.html" style="color:var(--red);text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:4px;">📱 QR Code Flyer</a>
   </footer>
 </div>
@@ -1395,7 +1395,7 @@ function renderDetail() {
         </svg>
         <div>
           <strong>Location</strong>
-          <p>Innovation Center – Main Stage</p>
+          <p>Virtual</p>
         </div>
       </div>
 
@@ -1533,7 +1533,7 @@ function downloadICS(s) {
   const start = toICSDate(s.day, s.time);
   const end = toICSDate(s.day, s.end);
   const clean = t => t.replace(/\\/g, "\\\\").replace(/,/g, "\\,").replace(/;/g, "\\;").replace(/\n/g, "\\n");
-  const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Innovation Showcase 2026//EN\nCALSCALE:GREGORIAN\nBEGIN:VEVENT\nUID:showcase-${s.id}-2026@wells-fargo\nDTSTAMP:20261001T000000Z\nDTSTART:${start}\nDTEND:${end}\nSUMMARY:${clean(s.title)}\nDESCRIPTION:${clean("Speakers: " + s.speakers.join(", ") + (s.partner ? " | " + s.partner : "") + "\\n" + s.description)}\nLOCATION:Innovation Center – Main Stage\nEND:VEVENT\nEND:VCALENDAR`;
+  const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Innovation Showcase 2026//EN\nCALSCALE:GREGORIAN\nBEGIN:VEVENT\nUID:showcase-${s.id}-2026@wells-fargo\nDTSTAMP:20261001T000000Z\nDTSTART:${start}\nDTEND:${end}\nSUMMARY:${clean(s.title)}\nDESCRIPTION:${clean("Speakers: " + s.speakers.join(", ") + (s.partner ? " | " + s.partner : "") + "\\n" + s.description)}\nLOCATION:Virtual\nEND:VEVENT\nEND:VCALENDAR`;
   const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -1681,7 +1681,7 @@ function openSessionModal(id) {
         </svg>
         <div>
           <strong>Location</strong>
-          <p>Innovation Center – Main Stage</p>
+          <p>Virtual</p>
         </div>
       </div>
 
@@ -1816,7 +1816,7 @@ document.querySelectorAll("[data-nav]").forEach(b => {
       $("modalContainer").style.overflow = "auto";
       $("modalTitle").textContent = "Venue Information";
       $("modalBody").innerHTML = `
-        <p style="font-size:14px;color:var(--ink);font-weight:700;margin-bottom:6px;">Innovation Center – Main Stage</p>
+        <p style="font-size:14px;color:var(--ink);font-weight:700;margin-bottom:6px;">Virtual</p>
         <p style="font-size:13px;color:var(--muted);line-height:1.6;">Keynotes and main stage presentations will be hosted in the Innovation Center Auditorium. Breakout discussions and partner exhibits are located in Pavilions A & B on Level 2.</p>
       `;
       $("modalBackdrop").classList.add("open");
@@ -1828,7 +1828,7 @@ document.querySelectorAll("[data-nav]").forEach(b => {
       $("modalContainer").style.overflow = "auto";
       $("modalTitle").textContent = "About Innovation Showcase 2026";
       $("modalBody").innerHTML = `
-        <p style="font-size:14px;color:var(--ink);font-weight:700;margin-bottom:4px;">Ideas / Technology / Impact</p>
+        <p style="font-size:14px;color:var(--ink);font-weight:700;margin-bottom:4px;">Innovate >> Adopt >> Reuse</p>
         <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px;">October 26–30, 2026. Explore sessions, learn from enterprise engineering leaders, and save sessions directly to your personal schedule.</p>
         <p style="font-size:12px;color:var(--muted);">Wells Fargo Enterprise Technology &bull; Event Planning Guide</p>
       `;
